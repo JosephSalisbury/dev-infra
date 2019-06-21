@@ -4,39 +4,30 @@
     vm =
         { config, pkgs, ... }:
         let
-            # gsctl = pkgs.buildGoPackage rec {
-            #    name = "gsctl-${version}";
-            #    version = "b9e631e8d7f273271055beab49b574f5b4fcc4bd";
+            gsctl = pkgs.buildGoPackage rec {
+                name = "gsctl-${version}";
+                version = "b9e631e8d7f273271055beab49b574f5b4fcc4bd";
 
-            #    goPackagePath = "github.com/giantswarm/gsctl";
+                goPackagePath = "github.com/giantswarm/gsctl";
 
-            #    src = builtins.fetchGit {
-            #        url = "git@github.com:giantswarm/gsctl.git";
-            #        ref = "master";
-            #        rev = "${version}";
-            #    };
+                src = builtins.fetchGit {
+                    url = "https://github.com/giantswarm/gsctl";
+                    ref = "master";
+                    rev = "${version}";
+                };
+            };
+            opsctl = pkgs.buildGoPackage rec {
+                name = "opsctl-${version}";
+                version = "4a5a7cd426a0fe16563b5e5b302ab5015d3339d6";
 
-            #    buildFlagsArray = ''
-            #        -ldflags=-X github.com/giantswarm/gsctl/config.Version=0.15.1
-            #        -X github.com/giantswarm/gsctl/config.BuildDate=2019-04-30T14:28:20Z
-            #    '';
-            # };
-            # opsctl = pkgs.buildGoPackage rec {
-            #    name = "opsctl-${version}";
-            #    version = "80fc939ec050e79e2672a3a5d5cef7565bf661e2";
+                goPackagePath = "github.com/giantswarm/opsctl";
 
-            #    goPackagePath = "github.com/giantswarm/opsctl";
-
-            #    src = builtins.fetchGit {
-            #        url = "git@github.com:giantswarm/opsctl.git";
-            #        ref = "master";
-            #        rev = "${version}";
-            #    };
-
-            #    buildFlagsArray = ''
-            #        -ldflags=-X main.gitCommit=${version}
-            #    '';
-            # };
+                src = builtins.fetchGit {
+                    url = "https://github.com/giantswarm/opsctl";
+                    ref = "master";
+                    rev = "${version}";
+                };
+            };
         in {
             deployment.targetEnv = "ec2";
             deployment.ec2 = {
@@ -50,6 +41,12 @@
                 ];
             };
             deployment.keys = {
+                "config.yaml" = {
+                    text = builtins.readFile /secrets/gsctl;
+                    user = "joe";
+                    group = "users";
+                    destDir = "/etc/joe/.config/gsctl/";
+                };
                 giantswarm_rsa = {
                     text = builtins.readFile /secrets/giantswarm_rsa;
                     user = "joe";
@@ -69,12 +66,6 @@
                     text = builtins.readFile /secrets/gpg-public;
                     user = "joe";
                     group = "users";
-                };
-                gsctl = {
-                    text = builtins.readFile /secrets/gsctl;
-                    user = "joe";
-                    group = "users";
-                    destDir = "/etc/joe/.config/gsctl/";
                 };
                 opsctl-github = {
                     text = builtins.readFile /secrets/opsctl-github;
@@ -365,11 +356,11 @@
                 gnumake
                 gnupg
                 go
-                # gsctl
+                gsctl
                 htop
                 jq
                 kubectl
-                # opsctl
+                opsctl
                 python3
                 tmux
                 tree
