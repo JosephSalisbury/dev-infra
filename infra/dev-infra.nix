@@ -18,7 +18,7 @@
             };
             opsctl = pkgs.buildGoPackage rec {
                 name = "opsctl-${version}";
-                version = "4a5a7cd426a0fe16563b5e5b302ab5015d3339d6";
+                version = "4a7f60f614d5caa5ed8260279285b358e061dee6";
 
                 goPackagePath = "github.com/giantswarm/opsctl";
 
