@@ -370,6 +370,7 @@
 
             networking.hostName = "vm";
 
+            programs.mosh.enable = true;
             programs.vim.defaultEditor = true;
 
             security.sudo.wheelNeedsPassword = false;
