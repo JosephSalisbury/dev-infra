@@ -180,7 +180,7 @@
                         fi
                         if [ "$#" -eq 1 ]; then
                                 opsctl create kubeconfig \
-                                        --cluster=$1 \
+                                        --installation=$1 \
                                 &> /dev/null
                                 if [ $? -eq 0 ]; then
                                         printf "\033[0;32mCreated control plane kubeconfig.\033[0m\n"
