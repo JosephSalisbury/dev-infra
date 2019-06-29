@@ -24,6 +24,7 @@ define s3
 endef
 
 define encrypt
+	rm -f $2
 	tar \
 		-czf \
 		$1.tar.gz \
