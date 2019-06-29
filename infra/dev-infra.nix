@@ -132,6 +132,8 @@
 
                     export GPG_TTY=$(tty)
 
+                    export PATH="$PATH:$HOME/.bin"
+
                     export GITHUB_TOKEN=$(cat /var/run/keys/gitcredentials | awk -F ':' '{print $3}' | awk -F '@' '{print $1}')
                     export OPSCTL_GITHUB_TOKEN=$(cat /var/run/keys/opsctl-github)
                     export OPSCTL_GPG_PASSWORD=$(cat /var/run/keys/opsctl-gpg)
@@ -229,6 +231,16 @@
                     function password {
                         cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1
                     }
+                '';
+            };
+            environment.etc."joe/.bin/kubectl-clear" = {
+                user = "joe";
+                group = "users";
+                mode = "700";
+                text = ''
+                    #!/usr/bin/env bash
+
+                    rm -rf ~/.kube/config
                 '';
             };
             environment.etc."joe/.gitconfig" = {
