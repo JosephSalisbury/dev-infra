@@ -141,10 +141,6 @@
                     source <(kubectl completion bash)
 
                     export PS1="\[\e[1m\]\$(date +'%Y-%m-%d %H:%M:%S')\[\e[0m\]\n$ "
-
-                    if [[ -z $TMUX ]] && [[ $USER != "root" ]]; then
-                        exec tmux new-session -A -s default
-                    fi
                 '';
             };
             environment.etc."joe/.bash_aliases" = {
