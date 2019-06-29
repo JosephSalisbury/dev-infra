@@ -1,3 +1,9 @@
 credentials
 secrets
 state
+
+state.enc
+secrets.enc
+
+state.tar.gz
+secrets.tar.gz
