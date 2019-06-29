@@ -1,0 +1,34 @@
+version: 2.1
+
+jobs:
+  deploy:
+    machine: true
+    steps:
+    - checkout
+    - run: |
+        mkdir -p ./credentials
+        echo $ACCESS_KEY_ID > ./credentials/access-key-id
+        echo $PGP_PASSPHRASE > ./credentials/pgp-passphrase
+        echo $SECRET_ACCESS_KEY > ./credentials/secret-access-key
+    - run: |
+        make download-state
+        make download-secrets
+    - run: |
+        make decrypt-state
+        make decrypt-secrets
+    - run: |
+        make deploy
+    - run: |
+        make encrypt-state
+    - run: |
+        make upload-state
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - hold:
+          type: approval
+      - deploy:
+          requires:
+          - hold
