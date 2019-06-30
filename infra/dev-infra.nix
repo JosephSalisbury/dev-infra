@@ -116,8 +116,10 @@
 
                     sudo chown -R joe:users /etc/joe
 
-                    eval `ssh-agent -s` > /dev/null 2>&1
-                    ssh-add /var/run/keys/giantswarm_rsa > /dev/null 2>&1
+                    if ! pgrep --exact 'ssh-agent' > /dev/null; then
+                        eval `ssh-agent -s` > /dev/null 2>&1
+                        ssh-add /var/run/keys/giantswarm_rsa > /dev/null 2>&1
+                    fi
 
                     if ! gpg --list-keys 2>&1 | grep -q 'salisbury.joseph@gmail.com'; then
                         gpg --import /var/run/keys/gpg-private > /dev/null 2>&1
