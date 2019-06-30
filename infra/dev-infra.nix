@@ -130,9 +130,14 @@
                             --password=$(cat /var/run/keys/quay) > /dev/null 2>&1
                     fi
 
+                    if [ ! -f "$HOME/go/bin/goimports" ]; then
+                        go get golang.org/x/tools/cmd/goimports
+                    fi
+
                     export GPG_TTY=$(tty)
 
                     export PATH="$PATH:$HOME/.bin"
+                    export PATH="$PATH:$HOME/go/bin"
 
                     export GITHUB_TOKEN=$(cat /var/run/keys/gitcredentials | awk -F ':' '{print $3}' | awk -F '@' '{print $1}')
                     export OPSCTL_GITHUB_TOKEN=$(cat /var/run/keys/opsctl-github)
@@ -352,6 +357,16 @@
                     fi
 
                     echo $path_info$git_info$kube_info
+                '';
+            };
+            environment.etc."joe/.vimrc" = {
+                user = "joe";
+                group = "users";
+                mode = "600";
+                text = ''
+                    set autoread
+
+                    au BufWritePost *.go !goimports -w %
                 '';
             };
 
