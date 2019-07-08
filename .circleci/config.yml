@@ -27,8 +27,14 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - hold:
-          type: approval
-      - deploy:
-          requires:
-          - hold
+    - deploy
+  nightly:
+    triggers:
+    - schedule:
+        cron: "0 6 * * *"
+        filters:
+          branches:
+            only:
+            - master
+    jobs:
+    - deploy
