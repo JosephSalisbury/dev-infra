@@ -28,10 +28,10 @@ workflows:
   deploy:
     jobs:
     - deploy
-  nightly:
+  hourly:
     triggers:
     - schedule:
-        cron: "0 6 * * *"
+        cron: "0 * * * *"
         filters:
           branches:
             only:
