@@ -137,6 +137,7 @@
                     fi
 
                     export GPG_TTY=$(tty)
+                    export HISTIGNORE='wl'
 
                     export PATH="$PATH:$HOME/.bin"
                     export PATH="$PATH:$HOME/go/bin"
