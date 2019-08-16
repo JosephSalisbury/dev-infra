@@ -391,6 +391,7 @@
                 tree
                 vim
                 wget
+                yq
             ];
 
             networking.hostName = "vm";
