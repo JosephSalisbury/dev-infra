@@ -4,18 +4,6 @@
     vm =
         { config, pkgs, ... }:
         let
-            gsctl = pkgs.buildGoPackage rec {
-                name = "gsctl-${version}";
-                version = "b9e631e8d7f273271055beab49b574f5b4fcc4bd";
-
-                goPackagePath = "github.com/giantswarm/gsctl";
-
-                src = builtins.fetchGit {
-                    url = "https://github.com/giantswarm/gsctl";
-                    ref = "master";
-                    rev = "${version}";
-                };
-            };
             opsctl = pkgs.buildGoPackage rec {
                 name = "opsctl-${version}";
                 version = "4a7f60f614d5caa5ed8260279285b358e061dee6";
