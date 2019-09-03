@@ -414,7 +414,7 @@
             };
 
             system.autoUpgrade = {
-                channel = "https://nixos.org/channels/nixos-19.03";
+                channel = "https://nixos.org/channels/nixos-unstable";
                 enable = true;
             };
 
