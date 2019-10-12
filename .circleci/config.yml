@@ -28,13 +28,3 @@ workflows:
   deploy:
     jobs:
     - deploy
-  hourly:
-    triggers:
-    - schedule:
-        cron: "0 * * * *"
-        filters:
-          branches:
-            only:
-            - master
-    jobs:
-    - deploy
